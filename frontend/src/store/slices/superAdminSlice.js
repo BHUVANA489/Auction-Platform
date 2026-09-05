@@ -2,6 +2,7 @@ import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { getAllAuctionItems } from "./auctionSlice";
+import { BACKEND_URL } from "../../config.js";
 
 const superAdminSlice = createSlice({
   name: "superAdmin",
@@ -107,7 +108,7 @@ export const getMonthlyRevenue = () => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForMonthlyRevenue());
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/v1/superadmin/monthlyincome",
+      `${BACKEND_URL}/api/v1/superadmin/monthlyincome`,
       { withCredentials: true }
     );
     dispatch(
@@ -117,7 +118,7 @@ export const getMonthlyRevenue = () => async (dispatch) => {
     );
   } catch (error) {
     dispatch(superAdminSlice.actions.failedForMonthlyRevenue());
-    console.error(error.response.data.message);
+    console.error(error.response?.data?.message || error);
   }
 };
 
@@ -125,13 +126,13 @@ export const getAllUsers = () => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForAllUsers());
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/v1/superadmin/users/getall",
+      `${BACKEND_URL}/api/v1/superadmin/users/getall`,
       { withCredentials: true }
     );
     dispatch(superAdminSlice.actions.successForAllUsers(response.data));
   } catch (error) {
     dispatch(superAdminSlice.actions.failureForAllUsers());
-    console.error(error.response.data.message);
+    console.error(error.response?.data?.message || error);
   }
 };
 
@@ -139,7 +140,7 @@ export const getAllPaymentProofs = () => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForPaymentProofs());
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/v1/superadmin/paymentproofs/getall",
+      `${BACKEND_URL}/api/v1/superadmin/paymentproofs/getall`,
       { withCredentials: true }
     );
     dispatch(
@@ -149,7 +150,7 @@ export const getAllPaymentProofs = () => async (dispatch) => {
     );
   } catch (error) {
     dispatch(superAdminSlice.actions.failureForPaymentProofs());
-    console.error(error.response.data.message);
+    console.error(error.response?.data?.message || error);
   }
 };
 
@@ -157,7 +158,7 @@ export const deletePaymentProof = (id) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForDeletePaymentProof());
   try {
     const response = await axios.delete(
-      `http://localhost:5000/api/v1/superadmin/paymentproof/delete/${id}`,
+      `${BACKEND_URL}/api/v1/superadmin/paymentproof/delete/${id}`,
       { withCredentials: true }
     );
     dispatch(superAdminSlice.actions.successForDeletePaymentProof());
@@ -165,8 +166,8 @@ export const deletePaymentProof = (id) => async (dispatch) => {
     toast.success(response.data.message);
   } catch (error) {
     dispatch(superAdminSlice.actions.failureForDeletePaymentProof());
-    console.error(error.response.data.message);
-    toast.error(error.response.data.message);
+    console.error(error.response?.data?.message || error);
+    toast.error(error.response?.data?.message || "Failed to delete payment proof");
   }
 };
 
@@ -174,7 +175,7 @@ export const getSinglePaymentProofDetail = (id) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForSinglePaymentProofDetail());
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/v1/superadmin/paymentproof/${id}`,
+      `${BACKEND_URL}/api/v1/superadmin/paymentproof/${id}`,
       { withCredentials: true }
     );
     dispatch(
@@ -184,7 +185,7 @@ export const getSinglePaymentProofDetail = (id) => async (dispatch) => {
     );
   } catch (error) {
     dispatch(superAdminSlice.actions.failureForSinglePaymentProofDetail());
-    console.error(error.response.data.message);
+    console.error(error.response?.data?.message || error);
   }
 };
 
@@ -192,7 +193,7 @@ export const updatePaymentProof = (id, status, amount) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForUpdatePaymentProof());
   try {
     const response = await axios.put(
-      `http://localhost:5000/api/v1/superadmin/paymentproof/status/update/${id}`,
+      `${BACKEND_URL}/api/v1/superadmin/paymentproof/status/update/${id}`,
       { status, amount },
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
@@ -202,8 +203,8 @@ export const updatePaymentProof = (id, status, amount) => async (dispatch) => {
     dispatch(superAdminSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(superAdminSlice.actions.failureForUpdatePaymentProof());
-    console.error(error.response.data.message);
-    toast.error(error.response.data.message);
+    console.error(error.response?.data?.message || error);
+    toast.error(error.response?.data?.message || "Failed to update payment proof");
   }
 };
 
@@ -211,7 +212,7 @@ export const deleteAuctionItem = (id) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForAuctionItemDelete());
   try {
     const response = await axios.delete(
-      `http://localhost:5000/api/v1/superadmin/auctionitem/delete/${id}`,
+      `${BACKEND_URL}/api/v1/superadmin/auctionitem/delete/${id}`,
       { withCredentials: true }
     );
     dispatch(superAdminSlice.actions.successForAuctionItemDelete());
