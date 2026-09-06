@@ -70,7 +70,7 @@ const About = () => {
           Our Story
         </h3>
         <p className="text-xl text-muted">
-          Founded by J Gagan Chandra, Make a Bid was born out of a passion for
+          Founded by Muttangi Bhuvaneswari , Make a Bid was born out of a passion for
           connecting people with unique and valuable items. With years of experience
           in the auction industry, our team is committed to creating a platform that
           offers an unparalleled auction experience for users worldwide.
